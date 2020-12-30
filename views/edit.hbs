@@ -1,4 +1,4 @@
-<form action="/expenses/{{ expense._id }}/edit" method="POST">
+<form action="/expenses/{{ expense._id }}?_method=PUT" method="POST">
   <input type="text" placeholder="name" name="name" value="{{ todo.name }}">
   <input type="text" placeholder="kind" name="kind" value="{{ todo.kind }}">
   <input type="text" placeholder="amount" name="amount" value="{{ todo.amount }}">

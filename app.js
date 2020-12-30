@@ -4,6 +4,7 @@ const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const Expense = require('./models/expense')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override') 
 
 const PORT = 3000
 
@@ -21,6 +22,7 @@ app.engine('hbs', exphbs({defaultLayout: 'main', extname: 'hbs'}))
 app.set('view engine', 'hbs')
 
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 //路由
 app.get('/', (req, res) => {
@@ -41,7 +43,7 @@ app.post('/expenses', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
-app.post('/expenses/:id/edit', (req, res) => {
+app.put('/expenses/:id', (req, res) => {
     const id = req.params.id
     // const {name, kind, amount, content} = req.body
     return Expense.findById(id)
@@ -56,7 +58,7 @@ app.post('/expenses/:id/edit', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
-app.post('/expenses/:id/delete', (req, res) => {
+app.delete('/expenses/:id', (req, res) => {
     const id = req.params.id
     return Expense.findById(id)
     .then(expense => expense.remove())
