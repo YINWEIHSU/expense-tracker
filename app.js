@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+const Expense = require('./models/expense')
 
 const PORT = 3000
 
@@ -20,7 +21,8 @@ app.set('view engine', 'hbs')
 
 //路由
 app.get('/', (req, res) => {
-    res.render('index')
+    Expense.find().lean().then( expenses => res.render('index', {expenses}))
+    .catch(error => console.error(error))
 })
 
 

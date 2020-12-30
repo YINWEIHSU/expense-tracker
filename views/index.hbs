@@ -1,1 +1,7 @@
-<h2>Hello world! 這是index</h2>
+<ul>
+    {{#each expenses}}
+    <li>
+        {{this.name}}{{this.kind}}{{this.amount}}{{this.content}}
+    </li>
+    {{/each}}
+</ul>
