@@ -43,15 +43,23 @@ app.post('/expenses', (req, res) => {
 })
 app.post('/expenses/:id/edit', (req, res) => {
     const id = req.params.id
-    const {name, kind, amount, content} = req.body
+    // const {name, kind, amount, content} = req.body
     return Expense.findById(id)
     .then(expense => {
-        expense.name = name
-        expense.kind = kind
-        expense.amount = amount
-        expense.content = content
+        // expense.name = name
+        // expense.kind = kind
+        // expense.amount = amount
+        // expense.content = content
+        expense = Object.assign(expense, req.body)//筆記
         return expense.save()
     })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+app.post('/expenses/:id/delete', (req, res) => {
+    const id = req.params.id
+    return Expense.findById(id)
+    .then(expense => expense.remove())
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })

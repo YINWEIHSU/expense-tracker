@@ -4,6 +4,9 @@
     <li>
         {{this.name}}{{this.kind}}{{this.amount}}{{this.content}}
         <a href="./expenses/{{this._id}}/edit">Edit</a>
+        <form action="./expenses/{{ this._id }}/delete" method="POST" style="display: inline;">
+  <button type="submit">delete</button>
+</form>
     </li>
     {{/each}}
 </ul>
