@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const Expense = require('./models/expense')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override') 
+const routes = require('./routes')
 
 const PORT = 3000
 
@@ -23,48 +24,10 @@ app.set('view engine', 'hbs')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+app.use(routes)
 
 //路由
-app.get('/', (req, res) => {
-    Expense.find().lean().then( expenses => res.render('index', {expenses}))
-    .catch(error => console.error(error))
-})
-app.get('/expenses/new', (req,res) => {
-    return res.render('new')
-})
-app.get('/expenses/:id/edit', (req, res) => {
-    const id = req.params.id
-    return Expense.findById(id).lean()
-    .then(expense => res.render('edit', {expense}))
-    .catch(error => console.log(error))
-})
-app.post('/expenses', (req, res) => {
-    return Expense.create(req.body)
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
-app.put('/expenses/:id', (req, res) => {
-    const id = req.params.id
-    // const {name, kind, amount, content} = req.body
-    return Expense.findById(id)
-    .then(expense => {
-        // expense.name = name
-        // expense.kind = kind
-        // expense.amount = amount
-        // expense.content = content
-        expense = Object.assign(expense, req.body)//筆記
-        return expense.save()
-    })
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
-app.delete('/expenses/:id', (req, res) => {
-    const id = req.params.id
-    return Expense.findById(id)
-    .then(expense => expense.remove())
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
+
 
 app.listen(3000, () => {
     console.log('App is running on http://localhost:3000')

@@ -1,8 +1,8 @@
 <form action="/expenses/{{ expense._id }}?_method=PUT" method="POST">
-  <input type="text" placeholder="name" name="name" value="{{ todo.name }}">
-  <input type="text" placeholder="kind" name="kind" value="{{ todo.kind }}">
-  <input type="text" placeholder="amount" name="amount" value="{{ todo.amount }}">
-  <input type="text" placeholder="content" name="content" value="{{ todo.content }}">
+  <input type="text" placeholder="name" name="name" value="{{ expense.name }}">
+  <input type="text" placeholder="kind" name="kind" value="{{ expense.kind }}">
+  <input type="text" placeholder="amount" name="amount" value="{{ expense.amount }}">
+  <input type="text" placeholder="content" name="content" value="{{ expense.content }}">
   <button type="submit">Save</button>
   <a href="/">back</a>
 </form>
