@@ -3,6 +3,7 @@
     {{#each expenses}}
     <li>
         {{this.name}}{{this.kind}}{{this.amount}}{{this.content}}
+        <a href="./expenses/{{this._id}}/edit">Edit</a>
     </li>
     {{/each}}
 </ul>

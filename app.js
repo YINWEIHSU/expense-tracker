@@ -30,8 +30,28 @@ app.get('/', (req, res) => {
 app.get('/expenses/new', (req,res) => {
     return res.render('new')
 })
+app.get('/expenses/:id/edit', (req, res) => {
+    const id = req.params.id
+    return Expense.findById(id).lean()
+    .then(expense => res.render('edit', {expense}))
+    .catch(error => console.log(error))
+})
 app.post('/expenses', (req, res) => {
     return Expense.create(req.body)
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+app.post('/expenses/:id/edit', (req, res) => {
+    const id = req.params.id
+    const {name, kind, amount, content} = req.body
+    return Expense.findById(id)
+    .then(expense => {
+        expense.name = name
+        expense.kind = kind
+        expense.amount = amount
+        expense.content = content
+        return expense.save()
+    })
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })

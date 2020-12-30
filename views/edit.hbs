@@ -1,0 +1,8 @@
+<form action="/expenses/{{ expense._id }}/edit" method="POST">
+  <input type="text" placeholder="name" name="name" value="{{ todo.name }}">
+  <input type="text" placeholder="kind" name="kind" value="{{ todo.kind }}">
+  <input type="text" placeholder="amount" name="amount" value="{{ todo.amount }}">
+  <input type="text" placeholder="content" name="content" value="{{ todo.content }}">
+  <button type="submit">Save</button>
+  <a href="/">back</a>
+</form>
