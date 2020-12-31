@@ -9,13 +9,14 @@ const expenseSchema = new Schema({
         type: Number,
         required: true
     },
-    kind: {
+    category: {
         type: String,
         required: true
     },
-    content: {
-        type: String
+    date: {
+        type: String,
+        required: true
     }
 })
 
-module.exports = mongoose.model('Expense', expenseSchema)
+module.exports = mongoose.model('Record', expenseSchema)

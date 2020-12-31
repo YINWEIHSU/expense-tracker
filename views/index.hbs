@@ -1,11 +1,58 @@
-<ul>
-    {{#each expenses}}
-    <li>
-        {{this.name}}{{this.kind}}{{this.amount}}{{this.content}}
-        <a href="./expenses/{{this._id}}/edit">Edit</a>
-        <form action="./expenses/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
-  <button type="submit">delete</button>
-</form>
+<div>
+    <form action="/" method="GET">
+    <label class="form-label" for="categorySelected">
+    分類顯示
+</label>
+   <select class="form-select" name="categorySelected" id="categorySelected" onchange="submit();">
+    <option selected>顯示全部</option>
+    <option {{#ifEquals categorySelected "生活"}}selected{{/ifEquals}}>生活</option>
+    <option {{#ifEquals categorySelected "交通"}}selected{{/ifEquals}}>交通</option>
+    <option {{#ifEquals categorySelected "娛樂"}}selected{{/ifEquals}}>娛樂</option>
+    <option {{#ifEquals categorySelected "飲食"}}selected{{/ifEquals}}>飲食</option>
+    <option {{#ifEquals categorySelected "其他"}}selected{{/ifEquals}}>其他</option>
+  </select>
+  </form>
+</div>
+<div class="my-5">
+    總金額:
+    <h1 class="d-flex justify-content-center">
+        {{totalAmount}}
+    </h1> 
+</div>
+
+
+<ul class="list-group list-group-flush">
+    {{#each expense}}
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col-10 row">
+                <div class="col-1" style="font-size: 2rem; color:aqua;">  
+                {{#ifEquals this.category "生活"}}<i class="fas fa-home"></i>{{/ifEquals}}
+                {{#ifEquals this.category "交通"}}<i class="fas fa-shuttle-van"></i>{{/ifEquals}}
+                {{#ifEquals this.category "娛樂"}}<i class="fas fa-grin-beam"></i>{{/ifEquals}}
+                {{#ifEquals this.category "飲食"}}<i class="fas fa-utensils"></i>{{/ifEquals}}
+                {{#ifEquals this.category "其他"}}<i class="fas fa-pen"></i>{{/ifEquals}}
+            </div>
+            <div class="col-7 mr-auto">
+                <h5 style="display: inline;">
+                    {{ this.name }}
+                </h5>
+                <div>
+                    {{this.date}}
+                </div>                
+            </div>
+            <div class="col-4" style="text-align:right;">
+                <h4 class="mr-4">{{this.amount}}</h4>
+            </div>
+            </div>
+            <div class="col-2">
+                <a class="btn btn-success" href="./expenses/{{this._id}}/edit"><i class="far fa-edit"></i></a>
+            <form action="./expenses/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
+                <button class="btn btn-danger" type="submit"><i class="fas fa-trash-alt"></i></button>
+            </form>
+            </div>
+            
+         </div>
     </li>
     {{/each}}
 </ul>

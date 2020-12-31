@@ -1,14 +1,14 @@
-const Expense = require('../expense')
+const Record = require('../expense')
 const db = require('../../config/mongoose')
 
 db.once('open', () => {
     console.log('mongodb connected!')
     for (let i = 0; i < 10; i++) {
-        Expense.create({
+        Record.create({
             name: 'name' + i,
-            kind: '其他',
+            category: '其他',
             amount: Math.floor(Math.random()*100) + 1,
-            content: '備註'
+            date: '2020-12-31'
         })
     }
     console.log('done')

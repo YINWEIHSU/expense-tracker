@@ -1,7 +1,21 @@
 <form action="/expenses" method="POST">
-  <input type="text" placeholder="name" name="name">
-  <input type="text" placeholder="kind" name="kind">
-  <input type="text" placeholder="amount" name="amount">
-  <input type="text" placeholder="content" name="content">
+  <div class="input-group">
+  <label class="form-label" for="expense-name">支出名稱</label>
+  <input type="text" placeholder="請輸入項目名稱" id="expense-name" name="name" value="">
+  <label class="form-label" for="expense-category">支出類別</label>
+   <select class="form-select" name="category" id="expense-category">
+    <option selected disabled>Choose...</option>
+    <option>生活</option>
+    <option>交通</option>
+    <option>娛樂</option>
+    <option>飲食</option>
+    <option>其他</option>
+  </select>
+  <label class="form-label" for="expense-amount">支出金額</label>
+  <input type="text" placeholder="請輸入金額" id="expense-amount" name="amount" value="">
+  <label class="form-label" for="expense-date">日期</label>
+  <input type="date" placeholder="date" id="expense-date" name="date" value="">
   <button type="submit">Create</button>
+  <a href="/">back</a>
+  </div>
 </form>
