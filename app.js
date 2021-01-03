@@ -1,14 +1,13 @@
 const express = require('express')
 const app = express()
 const exphbs = require('express-handlebars')
-const Record = require('./models/expense')
 const hdb = require('handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const routes = require('./routes')
 require('./config/mongoose')
 
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 hdb.registerHelper('ifEquals', function (arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
@@ -23,5 +22,5 @@ app.use(routes)
 
 
 app.listen(PORT, () => {
-  console.log('App is running on http://localhost:3000')
+  console.log(`App is running on http://localhost:${PORT}`)
 })
