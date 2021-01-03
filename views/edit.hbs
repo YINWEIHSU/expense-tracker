@@ -1,21 +1,27 @@
-<form action="/expenses/{{ expense._id }}?_method=PUT" method="POST">
-  <div class="input-group">
-  <label class="form-label" for="expense-name">支出名稱</label>
-  <input type="text" placeholder="請輸入項目名稱" id="expense-name" name="name" value="{{ expense.name }}">
-  <label class="form-label" for="expense-category">支出類別</label>
-   <select class="form-select" name="category" id="expense-category">
-    <option selected disabled>Choose...</option>
-    <option {{#ifEquals expense.category '生活'}}selected{{/ifEquals}}>生活</option>
-    <option {{#ifEquals expense.category '交通'}}selected{{/ifEquals}}>交通</option>
-    <option {{#ifEquals expense.category '娛樂'}}selected{{/ifEquals}}>娛樂</option>
-    <option {{#ifEquals expense.category '飲食'}}selected{{/ifEquals}}>飲食</option>
-    <option {{#ifEquals expense.category '其他'}}selected{{/ifEquals}}>其他</option>
-  </select>
-  <label class="form-label" for="expense-amount">支出金額</label>
-  <input type="text" placeholder="請輸入項目金額" id="expense-amount" name="amount" value="{{ expense.amount }}">
-  <label class="form-label" for="expense-date">日期</label>
-  <input type="date" placeholder="date" id="expense-date" name="date" value="{{ expense.date }}">
-  <button type="submit">Save</button>
-  <a href="/">back</a>
+<form class="container mx-5" action="/expenses/{{ expense._id }}?_method=PUT" method="POST">
+  <div class="input-group row">
+    <h3 class="col-12 mb-5" style="text-align: center;"><strong>請輸入支出內容</strong></h3>
+    <label class="form-label col-4 my-4" for="expense-name">支出名稱</label>
+    <input class="col-8 my-4" type="text" placeholder="請輸入項目名稱" id="expense-name" name="name" value="{{ expense.name }}"
+      required>
+    <label class="form-label col-4 my-4" for="expense-category">支出類別</label>
+    <select class="form-select col-8 my-4" name="category" id="expense-category" required>
+      <option selected disabled>Choose...</option>
+      <option {{#ifEquals expense.category '生活' }}selected{{/ifEquals}}>生活</option>
+      <option {{#ifEquals expense.category '交通' }}selected{{/ifEquals}}>交通</option>
+      <option {{#ifEquals expense.category '娛樂' }}selected{{/ifEquals}}>娛樂</option>
+      <option {{#ifEquals expense.category '飲食' }}selected{{/ifEquals}}>飲食</option>
+      <option {{#ifEquals expense.category '其他' }}selected{{/ifEquals}}>其他</option>
+    </select>
+    <label class="form-label col-4 my-4" for="expense-amount">支出金額</label>
+    <input class="col-8 my-4" type="text" placeholder="請輸入項目金額" id="expense-amount" name="amount"
+      value="{{ expense.amount }}" required>
+    <label class="form-label col-4 my-4" for="expense-date">日期</label>
+    <input class="col-8 my-4" type="date" placeholder="date" id="expense-date" name="date" value="{{ expense.date }}"
+      required>
+    <div class="col-12 my-4 d-flex justify-content-between">
+      <button class="btn btn-success" type="submit">Save</button>
+      <a class="btn btn-dark" href="/"><i class="fas fa-chevron-left"></i> Back</a>
+    </div>
   </div>
 </form>

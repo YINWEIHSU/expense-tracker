@@ -7,7 +7,7 @@ db.once('open', () => {
         Record.create({
             name: 'name' + i,
             category: '其他',
-            amount: Math.floor(Math.random()*100) + 1,
+            amount: Math.floor(Math.random() * 100) + 1,
             date: '2020-12-31'
         })
     }
