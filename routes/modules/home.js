@@ -12,8 +12,10 @@ router.get('/', (req, res) => {
             .then(expense => {
                 for (let item of expense) {
                     totalAmount += item.amount
+                    item.stringAmount = item.amount.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' }).slice(4, -3)
                 }
                 totalAmount = totalAmount.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' }).slice(0, -3)
+
                 res.render('index', { expense, totalAmount })
             })
             .catch(error => console.error(error))
@@ -23,8 +25,10 @@ router.get('/', (req, res) => {
             .then(expense => {
                 for (let item of expense) {
                     totalAmount += item.amount
+                    item.stringAmount = item.amount.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' }).slice(4, -3)
                 }
                 totalAmount = totalAmount.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' }).slice(0, -3)
+
                 res.render('index', { expense, totalAmount, categorySelected })
             })
             .catch(error => console.error(error))

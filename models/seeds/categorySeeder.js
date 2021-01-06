@@ -24,8 +24,19 @@ const categoryList = [
   }
 ]
 
+// db.once('open', () => {
+//   console.log('mongodb connected!')
+//   categoryList.forEach(category => Category.create(category).then(() => {
+//     console.log('Insert seed')
+//   }))
+//   setTimeout(() => db.close(), 1000)
+// })
+
 db.once('open', () => {
-  console.log('mongodb connected!')
-  categoryList.forEach(category => Category.create(category))
-  console.log('done')
+  Category.create(categoryList).then(() => {
+    console.log('insert category data done...')
+    return db.close()
+  }).then(() => {
+    console.log('database connection closed...')
+  })
 })

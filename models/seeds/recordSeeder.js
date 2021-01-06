@@ -34,8 +34,19 @@ const recordList = [
     }
 ]
 
+// db.once('open', () => {
+//     console.log('mongodb connected!')
+//     recordList.forEach(record => Record.create(record).then(() => {
+//         console.log('Insert seed')
+//     }))
+//     setTimeout(() => db.close(), 1000)
+// })
+
 db.once('open', () => {
-    console.log('mongodb connected!')
-    recordList.forEach(record => Record.create(record))
-    console.log('done')
+    Record.create(recordList).then(() => {
+        console.log('insert record data done...')
+        return db.close()
+    }).then(() => {
+        console.log('database connection closed...')
+    })
 })
