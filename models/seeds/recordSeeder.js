@@ -1,4 +1,4 @@
-const Record = require('../expense')
+const Record = require('../record')
 const db = require('../../config/mongoose')
 
 const recordList = [

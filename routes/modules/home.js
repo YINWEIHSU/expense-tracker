@@ -1,7 +1,18 @@
 const express = require('express')
 const router = express.Router()
 
-const Record = require('../../models/expense')
+const Record = require('../../models/record')
+
+function convertToThousands(data) {
+    let total = 0
+    for (let item of data) {
+        total += item.amount
+        item.stringAmount = item.amount.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' }).slice(4, -3)
+    }
+    total = total.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' }).slice(0, -3)
+
+    return { data, total }
+}
 
 router.get('/', (req, res) => {
     const categorySelected = req.query.categorySelected
@@ -10,11 +21,9 @@ router.get('/', (req, res) => {
         Record.find().lean()
             .sort({ date: 'desc' })
             .then(expense => {
-                for (let item of expense) {
-                    totalAmount += item.amount
-                    item.stringAmount = item.amount.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' }).slice(4, -3)
-                }
-                totalAmount = totalAmount.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' }).slice(0, -3)
+
+                expense = convertToThousands(expense).data
+                totalAmount = convertToThousands(expense).total
 
                 res.render('index', { expense, totalAmount })
             })
@@ -23,17 +32,14 @@ router.get('/', (req, res) => {
         Record.find({ category: `${categorySelected}` }).lean()
             .sort({ date: 'desc' })
             .then(expense => {
-                for (let item of expense) {
-                    totalAmount += item.amount
-                    item.stringAmount = item.amount.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' }).slice(4, -3)
-                }
-                totalAmount = totalAmount.toLocaleString('zh-TW', { style: 'currency', currency: 'TWD' }).slice(0, -3)
+
+                expense = convertToThousands(expense).data
+                totalAmount = convertToThousands(expense).total
 
                 res.render('index', { expense, totalAmount, categorySelected })
             })
             .catch(error => console.error(error))
     }
-
 })
 
 module.exports = router
