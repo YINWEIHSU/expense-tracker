@@ -21,6 +21,7 @@ router.get('/', (req, res) => {
         Record.find().lean()
             .sort({ date: 'desc' })
             .then(expense => {
+                console.log(convertToThousands(expense))
 
                 expense = convertToThousands(expense).data
                 totalAmount = convertToThousands(expense).total
