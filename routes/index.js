@@ -7,6 +7,6 @@ const users = require('./modules/users')
 
 router.use('/', home)
 router.use('/expenses', expenses)
-router.use('/user', users)
+router.use('/users', users)
 
 module.exports = router
