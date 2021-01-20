@@ -12,8 +12,15 @@
     <header>
         <nav class="navbar navbar-dark bg-primary justify-content-center">
             <div class="d-flex justify-content-between" style="width: 60vw; min-width: 560px;">
-                <a class="navbar-brand" href="/"><strong>老爸的私房錢</strong></a>
-                <a class="btn btn-outline-light" href="/expenses/new">Create</a>
+                <a class="navbar-brand" href="/">
+                    {{#if isAuthenticated}}{{ user.name}}的{{/if}}
+                    私房錢
+                </a>
+                {{#if isAuthenticated}}
+                <a href="/users/logout" class="btn btn-outline-light">Logout</a>
+                {{else}}
+                <a href="/users/login" class="btn btn-outline-light">Login</a>
+                {{/if}}
             </div>
 
         </nav>
