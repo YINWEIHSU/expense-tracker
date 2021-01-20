@@ -19,6 +19,9 @@
     <label class="form-label col-4 my-4" for="expense-date">日期</label>
     <input class="col-8 my-4" type="date" placeholder="date" id="expense-date" name="date" value="{{ expense.date }}"
       required>
+    <label class="form-label col-4 my-4" for="expense-date">商家</label>
+    <input class="col-8 my-4" type="text" placeholder="請輸入商家" id="merchant" name="merchant"
+      value="{{ expense.merchant }}">
     <div class="col-12 my-4 d-flex justify-content-between">
       <button class="btn btn-success" type="submit">Save</button>
       <a class="btn btn-dark" href="/"><i class="fas fa-chevron-left"></i> Back</a>

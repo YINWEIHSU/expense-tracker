@@ -17,6 +17,9 @@ const expenseSchema = new Schema({
         type: String,
         required: true
     },
+    merchant: {
+        type: String
+    },
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User',

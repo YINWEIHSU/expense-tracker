@@ -34,13 +34,16 @@
                     {{#ifEquals this.category "飲食"}}<i class="fas fa-utensils"></i>{{/ifEquals}}
                     {{#ifEquals this.category "其他"}}<i class="fas fa-pen"></i>{{/ifEquals}}
                 </div>
-                <div class="col-7 mr-auto">
+                <div class="col-2 mr-auto">
                     <h5 style="display: inline;">
-                        {{ this.name }}
+                        {{this.name}}
                     </h5>
                     <div>
                         {{this.date}}
                     </div>
+                </div>
+                <div class="col-5 mr-auto">
+                    {{this.merchant}}
                 </div>
                 <div class="col-4" style="text-align:right;">
                     <h4 class="mr-4">{{this.stringAmount}}</h4>
