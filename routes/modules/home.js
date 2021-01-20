@@ -16,9 +16,10 @@ function convertToThousands(data) {
 
 router.get('/', (req, res) => {
     const categorySelected = req.query.categorySelected
+    const userId = req.user._id
     let totalAmount = 0
     if (!categorySelected || categorySelected === '顯示全部') {
-        Record.find().lean()
+        Record.find({ userId }).lean()
             .sort({ date: 'desc' })
             .then(expense => {
                 console.log(convertToThousands(expense))
@@ -30,7 +31,7 @@ router.get('/', (req, res) => {
             })
             .catch(error => console.error(error))
     } else {
-        Record.find({ category: `${categorySelected}` }).lean()
+        Record.find({ category: `${categorySelected}`, userId }).lean()
             .sort({ date: 'desc' })
             .then(expense => {
 
