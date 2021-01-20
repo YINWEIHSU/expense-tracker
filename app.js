@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session')
 const app = express()
 const exphbs = require('express-handlebars')
 const hdb = require('handlebars')
@@ -16,9 +17,15 @@ hdb.registerHelper('ifEquals', function (arg1, arg2, options) {
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: 'hbs' }))
 app.set('view engine', 'hbs')
 
+app.use(session({
+  secret: 'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(routes)
+
 
 
 app.listen(PORT, () => {
