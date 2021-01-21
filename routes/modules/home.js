@@ -14,16 +14,30 @@ function convertToThousands(data) {
     return { data, total }
 }
 
+function formatDate(date) {
+    let y = date.getFullYear()
+    let m = date.getMonth() + 1
+    m = m < 10 ? '0' + m : m
+    let d = date.getDate()
+    d = d < 10 ? ('0' + d) : d
+    return y + '-' + m + '-' + d
+}
+
 router.get('/', (req, res) => {
-    const categorySelected = req.query.categorySelected
+    const { categorySelected, monthSelected } = req.query
+    console.log(req.query)
+    console.log(req.body)
+
     const userId = req.user._id
     let totalAmount = 0
-    if (!categorySelected || categorySelected === '顯示全部') {
+    if ((!categorySelected || categorySelected === '類別') && (!monthSelected || monthSelected === '月份')) {
+
         Record.find({ userId }).lean()
             .sort({ date: 'desc' })
             .then(expense => {
-                console.log(convertToThousands(expense))
-
+                for (let item of expense) {
+                    item.stringDate = formatDate(item.date)
+                }
                 expense = convertToThousands(expense).data
                 totalAmount = convertToThousands(expense).total
 
@@ -31,14 +45,17 @@ router.get('/', (req, res) => {
             })
             .catch(error => console.error(error))
     } else {
+
         Record.find({ category: `${categorySelected}`, userId }).lean()
             .sort({ date: 'desc' })
             .then(expense => {
-
+                for (let item of expense) {
+                    item.stringDate = formatDate(item.date)
+                }
                 expense = convertToThousands(expense).data
                 totalAmount = convertToThousands(expense).total
 
-                res.render('index', { expense, totalAmount, categorySelected })
+                res.render('index', { expense, totalAmount, categorySelected, monthSelected })
             })
             .catch(error => console.error(error))
     }
