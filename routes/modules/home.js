@@ -26,39 +26,76 @@ function formatDate(date) {
 router.get('/', (req, res) => {
     const { categorySelected, monthSelected } = req.query
     console.log(req.query)
-    console.log(req.body)
-
     const userId = req.user._id
     let totalAmount = 0
-    if ((!categorySelected || categorySelected === '類別') && (!monthSelected || monthSelected === '月份')) {
 
-        Record.find({ userId }).lean()
-            .sort({ date: 'desc' })
-            .then(expense => {
-                for (let item of expense) {
-                    item.stringDate = formatDate(item.date)
+    Record.find({ userId })
+        .lean()
+        .sort({ date: 'desc' })
+        .then(expense => {
+            if (categorySelected && categorySelected !== '類別') {
+
+                expense = expense.filter(item => item.category === categorySelected)
+
+            }
+
+            if (monthSelected && monthSelected !== '月份') {
+                // expense = expense.filter(item => {
+                //     (new Date(item.date).getMonth() + 1).toString() === monthSelected
+                // })
+                let expenses = []
+                for (let i = 0; i < expense.length; i++) {
+                    if ((new Date(expense[i].date).getMonth() + 1).toString() === monthSelected) {
+                        expenses.push(expense[i])
+                    }
+                    expense = expenses
+
                 }
-                expense = convertToThousands(expense).data
-                totalAmount = convertToThousands(expense).total
+            }
 
-                res.render('index', { expense, totalAmount })
-            })
-            .catch(error => console.error(error))
-    } else {
+            return expense
+        })
+        .then(expense => {
+            for (let item of expense) {
+                item.stringDate = formatDate(item.date)
+            }
+            expense = convertToThousands(expense).data
+            totalAmount = convertToThousands(expense).total
 
-        Record.find({ category: `${categorySelected}`, userId }).lean()
-            .sort({ date: 'desc' })
-            .then(expense => {
-                for (let item of expense) {
-                    item.stringDate = formatDate(item.date)
-                }
-                expense = convertToThousands(expense).data
-                totalAmount = convertToThousands(expense).total
+            res.render('index', { expense, totalAmount, categorySelected, monthSelected })
+        })
+        .catch(error => console.error(error))
 
-                res.render('index', { expense, totalAmount, categorySelected, monthSelected })
-            })
-            .catch(error => console.error(error))
-    }
+    // if ((!categorySelected || categorySelected === '類別') && (!monthSelected || monthSelected === '月份')) {
+
+    //     Record.find({ userId }).lean()
+    //         .sort({ date: 'desc' })
+    //         .then(expense => {
+    //             for (let item of expense) {
+    //                 item.stringDate = formatDate(item.date)
+    //             }
+    //             expense = convertToThousands(expense).data
+    //             totalAmount = convertToThousands(expense).total
+
+    //             res.render('index', { expense, totalAmount })
+    //         })
+    //         .catch(error => console.error(error))
+    // } else {
+
+    //     Record.find({ category: `${categorySelected}`, date: { $gt: `2021-1`, $lt: `2021-2` }, userId }).lean()
+    //         .sort({ date: 'desc' })
+    //         .then(expense => {
+
+    //             for (let item of expense) {
+    //                 item.stringDate = formatDate(item.date)
+    //             }
+    //             expense = convertToThousands(expense).data
+    //             totalAmount = convertToThousands(expense).total
+
+    //             res.render('index', { expense, totalAmount, categorySelected, monthSelected })
+    //         })
+    //         .catch(error => console.error(error))
+    // }
 })
 
 module.exports = router
