@@ -12,7 +12,7 @@ const usePassport = require('./config/passport')
 const user = require('./models/user')
 require('./config/mongoose')
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT
 
 hdb.registerHelper('ifEquals', function (arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
@@ -22,7 +22,7 @@ app.engine('hbs', exphbs({ defaultLayout: 'main', extname: 'hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))

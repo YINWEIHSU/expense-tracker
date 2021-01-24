@@ -1,5 +1,15 @@
+const bcrypt = require('bcryptjs')
+if (process.env.MODE_ENV !== 'production') {
+    require('dotenv').config()
+}
 const Record = require('../record')
+const User = require('../user')
 const db = require('../../config/mongoose')
+const SEED_USER = {
+    name: 'test',
+    email: 'test@example.com',
+    password: '12345678'
+}
 
 const recordList = [
     {
@@ -43,10 +53,26 @@ const recordList = [
 // })
 
 db.once('open', () => {
-    Record.create(recordList).then(() => {
-        console.log('insert record data done...')
-        return db.close()
-    }).then(() => {
-        console.log('database connection closed...')
-    })
+    bcrypt
+        .genSalt(10)
+        .then(salt => bcrypt.hash(SEED_USER.password, salt))
+        .then(hash => User.create({
+            name: SEED_USER.name,
+            email: SEED_USER.email,
+            password: hash
+        }))
+        .then(user => {
+            const userId = user._id
+            Record.create(recordList, userId)
+        })
+        .then(() => {
+            console.log('done')
+            process.exit()
+        })
+    //     Record.create(recordList).then(() => {
+    //         console.log('insert record data done...')
+    //         return db.close()
+    //     }).then(() => {
+    //         console.log('database connection closed...')
+    //     })
 })

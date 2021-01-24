@@ -25,7 +25,6 @@ function formatDate(date) {
 
 router.get('/', (req, res) => {
     const { categorySelected, monthSelected } = req.query
-    console.log(req.query)
     const userId = req.user._id
     let totalAmount = 0
 
@@ -40,17 +39,9 @@ router.get('/', (req, res) => {
             }
 
             if (monthSelected && monthSelected !== '月份') {
-                // expense = expense.filter(item => {
-                //     (new Date(item.date).getMonth() + 1).toString() === monthSelected
-                // })
-                let expenses = []
-                for (let i = 0; i < expense.length; i++) {
-                    if ((new Date(expense[i].date).getMonth() + 1).toString() === monthSelected) {
-                        expenses.push(expense[i])
-                    }
-                    expense = expenses
-
-                }
+                expense = expense.filter(item =>
+                    (new Date(item.date).getMonth() + 1).toString() === monthSelected
+                )
             }
 
             return expense
