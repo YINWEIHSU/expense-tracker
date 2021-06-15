@@ -13,34 +13,44 @@ const SEED_USER = {
 
 const recordList = [
     {
+        type: '支出',
         name: '早餐',
         category: '飲食',
         date: '2021-1-20',
         amount: 54,
+        remarks: ''
     },
     {
+        type: '支出',
         name: '高鐵',
         category: '交通',
         date: '2021-1-29',
         amount: 1490,
+        remarks: ''
     },
     {
+        type: '支出',
         name: '靈魂急轉彎',
         category: '娛樂',
         date: '2021-1-1',
         amount: 320,
+        remarks: ''
     },
     {
+        type: '支出',
         name: '蟑螂藥',
         category: '生活',
         date: '2021-2-28',
         amount: 150,
+        remarks: ''
     },
     {
+        type: '支出',
         name: '股票',
         category: '其他',
         date: '2021-3-4',
         amount: 450000,
+        remarks: ''
     }
 ]
 
