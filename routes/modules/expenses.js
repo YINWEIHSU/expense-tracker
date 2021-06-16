@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const expenseController = require('../../controller/expenseController')
+const expenseController = require('../../controllers/expenseController')
 
 router.get('/new', expenseController.createExpense)
 router.get('/:id/edit', expenseController.editExpense)
