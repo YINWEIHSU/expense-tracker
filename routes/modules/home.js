@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-
 const Record = require('../../models/record')
 
 function convertToThousands(data) {
@@ -33,17 +32,13 @@ router.get('/', (req, res) => {
         .sort({ date: 'desc' })
         .then(expense => {
             if (categorySelected && categorySelected !== '類別') {
-
                 expense = expense.filter(item => item.category === categorySelected)
-
             }
 
             if (monthSelected && monthSelected !== '月份') {
                 expense = expense.filter(item =>
                     (new Date(item.date).getMonth() + 1).toString() === monthSelected
-                )
-            }
-
+                )}
             return expense
         })
         .then(expense => {
@@ -56,37 +51,6 @@ router.get('/', (req, res) => {
             res.render('index', { expense, totalAmount, categorySelected, monthSelected })
         })
         .catch(error => console.error(error))
-
-    // if ((!categorySelected || categorySelected === '類別') && (!monthSelected || monthSelected === '月份')) {
-
-    //     Record.find({ userId }).lean()
-    //         .sort({ date: 'desc' })
-    //         .then(expense => {
-    //             for (let item of expense) {
-    //                 item.stringDate = formatDate(item.date)
-    //             }
-    //             expense = convertToThousands(expense).data
-    //             totalAmount = convertToThousands(expense).total
-
-    //             res.render('index', { expense, totalAmount })
-    //         })
-    //         .catch(error => console.error(error))
-    // } else {
-
-    //     Record.find({ category: `${categorySelected}`, date: { $gt: `2021-1`, $lt: `2021-2` }, userId }).lean()
-    //         .sort({ date: 'desc' })
-    //         .then(expense => {
-
-    //             for (let item of expense) {
-    //                 item.stringDate = formatDate(item.date)
-    //             }
-    //             expense = convertToThousands(expense).data
-    //             totalAmount = convertToThousands(expense).total
-
-    //             res.render('index', { expense, totalAmount, categorySelected, monthSelected })
-    //         })
-    //         .catch(error => console.error(error))
-    // }
 })
 
 module.exports = router
