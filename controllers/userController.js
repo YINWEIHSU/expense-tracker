@@ -37,6 +37,7 @@ const userController = {
         if (user) {
           errors.push({ message: '這個 Email 已經註冊過了。' })
           return res.render('register', {
+            errors,
             name,
             email,
             password,
@@ -51,7 +52,10 @@ const userController = {
             email,
             password: hash
           }))
-          .then(() => res.redirect('/'))
+          .then(() => {
+            req.flash('success_msg', '您已成功註冊。')
+            res.redirect('/users/login')
+          })
           .catch(err => console.log(err))
       })
 
