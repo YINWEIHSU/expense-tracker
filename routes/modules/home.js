@@ -38,7 +38,8 @@ router.get('/', (req, res) => {
             if (monthSelected && monthSelected !== '月份') {
                 expense = expense.filter(item =>
                     (new Date(item.date).getMonth() + 1).toString() === monthSelected
-                )}
+                )
+            }
             return expense
         })
         .then(expense => {
