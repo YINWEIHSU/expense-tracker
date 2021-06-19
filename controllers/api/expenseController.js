@@ -15,9 +15,8 @@ const expenseController = {
     if (req.body.type === 'expense') {
       req.body.amount = Math.abs(Number(req.body.amount)) * -1
     }
-    console.log(req.body)
-    return Record.create(req.body)
-      .then(() => res.redirect('/'))
+    Record.create(req.body)
+      .then(() => res.status(401).json({ status: 'success', message: '成功新增紀錄' }))
       .catch(error => console.log(error))
   },
   putExpense: (req, res) => {
@@ -28,7 +27,7 @@ const expenseController = {
         expense = Object.assign(expense, req.body)
         return expense.save()
       })
-      .then(() => res.redirect('/'))
+      .then(() => res.status(401).json({ status: 'success', message: '成功修改紀錄' }))
       .catch(error => console.log(error))
   },
   deleteExpense: (req, res) => {
@@ -36,7 +35,7 @@ const expenseController = {
     const _id = req.params.id
     return Record.findOne({ _id, userId })
       .then(expense => expense.remove())
-      .then(() => res.redirect('/'))
+      .then(() => res.status(401).json({ status: 'success', message: '成功刪除紀錄' }))
       .catch(error => console.log(error))
   }
 }

@@ -8,7 +8,7 @@ const passport = require('../config/passport')
 const authenticated = passport.authenticate('jwt', { session: false })
 
 router.get('/', authenticated, expenseController.getExpenses)
-router.post('/expenses/', expenseController.postExpense)
+router.post('/expenses/', authenticated, expenseController.postExpense)
 router.put('/expenses/:id', expenseController.putExpense)
 router.delete('/expenses/:id', expenseController.deleteExpense)
 
