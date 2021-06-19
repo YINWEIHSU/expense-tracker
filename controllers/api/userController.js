@@ -13,16 +13,16 @@ const userController = {
   signIn: (req, res) => {
     // 檢查必要資料
     if (!req.body.email || !req.body.password) {
-      return res.json({ status: 'error', message: "required fields didn't exist" })
+      return res.json({ status: 'error', message: "所有欄位都是必填。" })
     }
     // 檢查 user 是否存在與密碼是否正確
     let username = req.body.email
     let password = req.body.password
 
     User.findOne({ email: username }).then(user => {
-      if (!user) return res.status(401).json({ status: 'error', message: 'no such user found' })
+      if (!user) return res.status(401).json({ status: 'error', message: '查無此使用者' })
       if (!bcrypt.compareSync(password, user.password)) {
-        return res.status(401).json({ status: 'error', message: 'passwords did not match' })
+        return res.status(401).json({ status: 'error', message: '密碼與確認密碼不相符。' })
       }
       // 簽發 token
       var payload = { id: user.id }
