@@ -10,7 +10,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const routes = require('./routes')
-const usePassport = require('./config/passport')
+const passport = require('./config/passport')
 const user = require('./models/user')
 require('./config/mongoose')
 
@@ -30,8 +30,10 @@ app.use(session({
 }))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+// 初始化 Passport 模組
+app.use(passport.initialize())
+app.use(passport.session())
 
-usePassport(app)
 app.use(flash())
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated()

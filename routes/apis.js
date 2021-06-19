@@ -4,6 +4,8 @@ const { authenticator } = require('../middleware/auth')
 const expenseController = require('../controllers/api/expenseController')
 const Record = require('../models/record')
 const userController = require('../controllers/api/userController')
+const passport = require('../config/passport')
+const authenticated = passport.authenticate('jwt', { session: false })
 
 
 function convertToThousands(data) {
@@ -26,35 +28,15 @@ function formatDate(date) {
   return y + '-' + m + '-' + d
 }
 
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
   const { categorySelected, monthSelected } = req.query
   const userId = req.user._id
-  let totalAmount = 0
 
   Record.find({ userId })
     .lean()
     .sort({ date: 'desc' })
     .then(expense => {
-      if (categorySelected && categorySelected !== '類別') {
-        expense = expense.filter(item => item.category === categorySelected)
-      }
-
-      if (monthSelected && monthSelected !== '月份') {
-        expense = expense.filter(item =>
-          (new Date(item.date).getMonth() + 1).toString() === monthSelected
-        )
-      }
-      return expense
-    })
-    .then(expense => {
-      for (let item of expense) {
-        item.stringDate = formatDate(item.date)
-      }
-      expense = convertToThousands(expense).data
-      console.log(expense)
-      totalAmount = convertToThousands(expense).total
-
-      res.render('index', { expense, totalAmount, categorySelected, monthSelected })
+      res.json(expense)
     })
     .catch(error => console.error(error))
 })
