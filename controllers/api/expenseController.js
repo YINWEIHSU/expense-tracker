@@ -1,15 +1,14 @@
 const Record = require('../../models/record')
 
 const expenseController = {
-  createExpense: (req, res) => {
-    return res.render('new')
-  },
-  editExpense: (req, res) => {
+  getExpenses: (req, res) => {
     const userId = req.user._id
-    const _id = req.params.id
-    return Record.findOne({ _id, userId }).lean()
-      .then(expense => res.render('edit', { expense }))
-      .catch(error => console.log(error))
+    Record.find({ userId })
+      .sort({ date: 'desc' })
+      .then(expense => {
+        res.json(expense)
+      })
+      .catch(error => console.error(error))
   },
   postExpense: (req, res) => {
     req.body.userId = req.user._id

@@ -10,9 +10,6 @@ const ExtractJwt = passportJWT.ExtractJwt
 const JwtStrategy = passportJWT.Strategy
 
 const userController = {
-  signInPage: (req, res) => {
-    res.render('login')
-  },
   signIn: (req, res) => {
     // 檢查必要資料
     if (!req.body.email || !req.body.password) {
@@ -40,54 +37,29 @@ const userController = {
       })
     })
   },
-  signUpPage: (req, res) => {
-    res.render('register')
-  },
   signUp: (req, res) => {
     const { name, email, password, confirmPassword } = req.body
-    const errors = []
     if (!name || !email || !password || !confirmPassword) {
-      errors.push({ message: '所有欄位都是必填。' })
+      return res.status(401).json({ status: 'error', message: '所有欄位都是必填。' })
     }
     if (password !== confirmPassword) {
-      errors.push({ message: '密碼與確認密碼不相符。' })
-    }
-    if (errors.length) {
-      return res.render('register', {
-        errors,
-        name,
-        email,
-        password,
-        confirmPassword
-      })
+      return res.status(401).json({ status: 'error', message: '密碼與確認密碼不相符。' })
     }
     User.findOne({ email })
       .then(user => {
         if (user) {
-          errors.push({ message: '這個 Email 已經註冊過了。' })
-          return res.render('register', {
-            errors,
-            name,
-            email,
-            password,
-            confirmPassword
-          })
+          return res.json({ status: 'error', message: '這個 Email 已經註冊過了。' })
         }
-        return bcrypt
-          .genSalt(10)
-          .then(salt => bcrypt.hash(password, salt))
-          .then(hash => User.create({
-            name,
-            email,
-            password: hash
-          }))
-          .then(() => {
-            req.flash('success_msg', '您已成功註冊。')
-            res.redirect('/users/login')
+        User.create({
+          name,
+          email,
+          password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+        })
+          .then(user => {
+            return res.json({ status: 'success', message: '成功註冊帳號！' })
           })
           .catch(err => console.log(err))
       })
-
   }
 }
 
