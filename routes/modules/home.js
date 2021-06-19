@@ -47,6 +47,7 @@ router.get('/', (req, res) => {
                 item.stringDate = formatDate(item.date)
             }
             expense = convertToThousands(expense).data
+            console.log(expense)
             totalAmount = convertToThousands(expense).total
 
             res.render('index', { expense, totalAmount, categorySelected, monthSelected })

@@ -1,4 +1,4 @@
-const Record = require('../models/record')
+const Record = require('../../models/record')
 
 const expenseController = {
   createExpense: (req, res) => {

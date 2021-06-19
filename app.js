@@ -10,7 +10,6 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const routes = require('./routes')
-
 const usePassport = require('./config/passport')
 const user = require('./models/user')
 require('./config/mongoose')
@@ -41,7 +40,7 @@ app.use((req, res, next) => {
   res.locals.warning_msg = req.flash('warning_msg')
   next()
 })
-app.use(routes)
+require('./routes/index')(app)
 
 
 
