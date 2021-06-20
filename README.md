@@ -8,8 +8,9 @@ Expensetracker是一個簡單的記帳程式，可以協助管理日常生活的
 * 可以點擊"Edit"(紙筆圖案)按鈕編輯支出
 * 可以點擊"Delete"(垃圾桶圖案)刪除支出
 
-#測試帳號及網址
+# 測試帳號及網址
 https://expense-tracker-apis.herokuapp.com/
+
 可透過以下帳號密碼登入測試帳號
 帳號: test@example.com
 密碼: 12345678
