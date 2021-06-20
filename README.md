@@ -4,9 +4,16 @@ Expensetracker是一個簡單的記帳程式，可以協助管理日常生活的
 # Features(功能)
 * 點擊左上角標題可返回首頁
 * 點擊右上角"Create"可新增按鈕
-* 可以透過下拉式選單篩選支出類別
+* 可以透過下拉式選單篩選支出類別及月分
 * 可以點擊"Edit"(紙筆圖案)按鈕編輯支出
 * 可以點擊"Delete"(垃圾桶圖案)刪除支出
+
+#測試帳號及網址
+https://expense-tracker-apis.herokuapp.com/
+可透過以下帳號密碼登入測試帳號
+帳號: test@example.com
+密碼: 12345678
+
 
 # prerequisites(環境建置)
 * Node.js: v10.15.0
@@ -43,3 +50,5 @@ npm run dev
 http://localhost:3000
 
 終端機顯示'App is running on http://localhost:3000'即成功開啟
+
+
