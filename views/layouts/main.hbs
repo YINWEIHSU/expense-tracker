@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>老爸的私房錢</title>
+    <title>記帳表</title>
     <link rel="stylesheet" href="https://bootswatch.com/4/litera/bootstrap.min.css" crossorigin="anonymous">
 </head>
 
@@ -14,7 +14,7 @@
             <div class="d-flex justify-content-between" style="width: 60vw; min-width: 560px;">
                 <a class="navbar-brand" href="/">
                     {{#if isAuthenticated}}{{ user.name}}的{{/if}}
-                    私房錢
+                    記帳表
                 </a>
                 {{#if isAuthenticated}}
                 <a href="/users/logout" class="btn btn-outline-light">Logout</a>
